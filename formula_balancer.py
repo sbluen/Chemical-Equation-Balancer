@@ -52,7 +52,7 @@ def parse_molecule(formula_string):
     return elements
 
 def coeff_format(number):
-    """Returns the input in coefficient format such that 1 becomes the empty string 
+    """Returns the input in coefficient format such that 1 becomes the empty string
     and anything else becomes the str of itself"""
     if number == 1:
         return ""
@@ -67,7 +67,7 @@ def is_almost_whole(number):
 
 
 row = input()
-sys.stderr.write(row + "\n")
+#sys.stderr.write(row + "\n")
 left_raw, right_raw = row.split(" -> ")
 
 left_molecules = []
@@ -98,7 +98,7 @@ element_count = len(element_set)
 max_count = max(molecule_count, element_count)
 
 matrix = numpy.zeros(shape=(element_count, molecule_count))
-sys.stderr.write(str(element_set)+"\n")
+#sys.stderr.write(str(element_set)+"\n")
 
 offset = len(left_molecules)
 for i, element in enumerate(element_set):
@@ -110,7 +110,7 @@ for i, element in enumerate(element_set):
         #row.append(molecule[element])
     #matrix.append(row)
 
-sys.stderr.write(str(matrix) + "\n")
+#sys.stderr.write(str(matrix) + "\n")
 #matrix is now a linear algebra matrix and we need to solve for the case
 #when matrix equals the 0 vector
 
