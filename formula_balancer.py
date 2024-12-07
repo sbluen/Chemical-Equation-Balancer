@@ -65,7 +65,6 @@ def is_almost_whole(number):
     number = decimal.Decimal(number)
     return abs(round(number)-number) < DELTA
 
-
 row = input()
 #sys.stderr.write(row + "\n")
 left_raw, right_raw = row.split(" -> ")
