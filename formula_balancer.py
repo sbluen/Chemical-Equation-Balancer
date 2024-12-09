@@ -8,10 +8,9 @@ import numpy
 import scipy
 
 
-#pylint: disable=too-complex
-def parse_molecule(formula_string):
+def parse_molecule(formula_string): # noqa: E901
     """
-    Returns the formula string split into elements and quantites.
+    Returns a dict mapping from element symbol to number of atoms.
     formula_string is the text representing the molecule, such as C6H12O6
     """
     elements = defaultdict(int)
@@ -56,9 +55,10 @@ def parse_molecule(formula_string):
 
 
 def coeff_format(number):
-    """Returns the input in coefficient format such that 1 becomes the empty string
-    and anything else becomes the str of itself"""
-    if number == 1:
+    """This function formats a coefficient for display. If the coefficient is 1,
+    #it returns an empty string ( effectively hiding the 1), otherwise it returns
+    #the coefficient as a string."""
+    if number == 1:    # pylint: disable=no-else-return
         return ""
     else:
         return str(number)
@@ -89,7 +89,7 @@ for symbol in right_raw.split():
     right_molecules.append(parse_molecule(symbol))
     right_molecule_strings.append(symbol)
 
-molecule_count = len(left_molecules) + len(right_molecules)
+molecule_count = len(left_molecules) + len(right_molecules)  #pylint: disable=invalid-name
 
 element_set = set()
 for molecule in left_molecules:
@@ -102,7 +102,7 @@ max_count = max(molecule_count, element_count)
 
 matrix = numpy.zeros(shape=(element_count, molecule_count))
 
-offset = len(left_molecules)
+offset = len(left_molecules)     #pylint: disable=invalid-name
 for i, element_for_matrix in enumerate(element_set):
     for j, molecule in enumerate(left_molecules):
         matrix[i][j] = molecule[element_for_matrix]
@@ -127,16 +127,16 @@ normalized_nullspace = numpy.round(normalized_nullspace, decimals=0)
 sign = int(normalized_nullspace[0] / abs(normalized_nullspace[0]))
 normalized_nullspace *= sign
 
-output = ""
+output = ""    #pylint: disable=invalid-name
 for j, string in enumerate(left_molecule_strings):
     output += coeff_format(int(normalized_nullspace[j])) + string + " + "
 
 # -3 to remove the final +
 output = output[:-3] + " -> "
 
-OFFSET = len(left_molecules)
+offset = len(left_molecules)     #pylint: disable=invalid-name
 for j, string in enumerate(right_molecule_strings):
-    output += coeff_format(int(normalized_nullspace[OFFSET + j])) + string + " + "
+    output += coeff_format(int(normalized_nullspace[offset + j])) + string + " + "
 
 # -3 to remove the final +
 output = output[:-3]
