@@ -1,11 +1,14 @@
+"""A script to balance chemical formulae"""
+
 from collections import defaultdict
-import numpy
-import scipy
 import fractions
 import decimal
 
+import numpy
+import scipy
 
-# pylint: disable-next=too-complex
+
+#pylint: disable=too-complex
 def parse_molecule(formula_string):
     """
     Returns the formula string split into elements and quantites.
@@ -60,12 +63,11 @@ def coeff_format(number):
     else:
         return str(number)
 
-
+TOLERANCE = 0.001
 def is_almost_whole(number):
     """Returns true if number is or almost is a whole number, with a small delta"""
-    DELTA = 0.001
     number = decimal.Decimal(number)
-    return abs(round(number)-number) < DELTA
+    return abs(round(number)-number) < TOLERANCE
 
 
 row = input()
@@ -101,11 +103,11 @@ max_count = max(molecule_count, element_count)
 matrix = numpy.zeros(shape=(element_count, molecule_count))
 
 offset = len(left_molecules)
-for i, element in enumerate(element_set):
+for i, element_for_matrix in enumerate(element_set):
     for j, molecule in enumerate(left_molecules):
-        matrix[i][j] = molecule[element]
+        matrix[i][j] = molecule[element_for_matrix]
     for j, molecule in enumerate(right_molecules):
-        matrix[i][offset+j] = -molecule[element]
+        matrix[i][offset + j] = -molecule[element_for_matrix]
 
 # matrix is now a linear algebra matrix and we need to solve for the case
 # when matrix equals the 0 vector
@@ -132,9 +134,9 @@ for j, string in enumerate(left_molecule_strings):
 # -3 to remove the final +
 output = output[:-3] + " -> "
 
-offset = len(left_molecules)
+OFFSET = len(left_molecules)
 for j, string in enumerate(right_molecule_strings):
-    output += coeff_format(int(normalized_nullspace[offset+j])) + string + " + "
+    output += coeff_format(int(normalized_nullspace[OFFSET + j])) + string + " + "
 
 # -3 to remove the final +
 output = output[:-3]
