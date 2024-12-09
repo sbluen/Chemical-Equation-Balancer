@@ -4,8 +4,9 @@ import scipy
 import fractions
 import decimal
 
-@SuppressLint("C901") 
+
 def parse_molecule(formula_string):
+    # pylint: disable=too-complex
     """
     Returns the formula string split into elements and quantites.
     formula_string is the text representing the molecule, such as C6H12O6
