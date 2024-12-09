@@ -4,7 +4,7 @@ import scipy
 import fractions
 import decimal
 
-# pylint: disable=C901
+# pylint: disable-next=C901
 def parse_molecule(formula_string):
     """
     Returns the formula string split into elements and quantites.
