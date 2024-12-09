@@ -20,6 +20,7 @@ class MyTestCase(unittest.TestCase):
         _OUTPUT = "2NaOH + H2CO3 -> Na2CO3 + 2H2O\n"
         process = run(["python3", "formula_balancer.py"], input=_INPUT, capture_output=True, text=True)
         self.assertEqual(process.stdout, _OUTPUT)
+        
 
 if __name__ == '__main__':
     unittest.main()
