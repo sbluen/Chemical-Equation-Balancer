@@ -4,7 +4,7 @@ import scipy
 import fractions
 import decimal
 
-
+@SuppressLint("C901") 
 def parse_molecule(formula_string):
     """
     Returns the formula string split into elements and quantites.
@@ -105,7 +105,7 @@ for i, element in enumerate(element_set):
         matrix[i][j] = molecule[element]
     for j, molecule in enumerate(right_molecules):
         matrix[i][offset+j] = -molecule[element]
-        
+
 # matrix is now a linear algebra matrix and we need to solve for the case
 # when matrix equals the 0 vector
 nullspace = scipy.linalg.null_space(matrix)
@@ -133,9 +133,8 @@ output = output[:-3] + " -> "
 
 offset = len(left_molecules)
 for j, string in enumerate(right_molecule_strings):
-    output += coeff_format(int(normalized_nullspace[offset+j])) + string  + " + "
+    output += coeff_format(int(normalized_nullspace[offset+j])) + string + " + "
 
 # -3 to remove the final +
 output = output[:-3]
 print(output)
-
