@@ -71,7 +71,6 @@ def is_almost_whole(number):
     number = decimal.Decimal(number)
     return abs(round(number)-number) < TOLERANCE
 
-
 row = input()
 left_raw, right_raw = row.split(" -> ")
 
